@@ -2,6 +2,13 @@
 
 bbn: blog.bouzuya.net api
 
+## Badges
+
+[![Travis CI][travisci-badge-url]][travisci-url]
+
+[travisci-badge-url]: https://travis-ci.org/bouzuya/bbn-api.svg?branch=master
+[travisci-url]: https://travis-ci.org/bouzuya/bbn-api
+
 ## License
 
 [MIT](LICENSE)
