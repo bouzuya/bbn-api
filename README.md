@@ -2,6 +2,10 @@
 
 bbn: blog.bouzuya.net api
 
+NOTE: bbn < 4.x uses [bouzuya/kraken][].
+
+[bouzuya/kraken]: https://github.com/bouzuya/kraken
+
 ## Badges
 
 [![Travis CI][travisci-badge-url]][travisci-url]
