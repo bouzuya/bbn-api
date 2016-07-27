@@ -22,6 +22,7 @@
     "url": "https://github.com/bouzuya/bbn-api/issues"
   },
   "dependencies": {
+    "marked": "0.3.5",
     "time-keeper": "0.2.2"
   },
   "devDependencies": {
