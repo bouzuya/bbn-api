@@ -1,4 +1,4 @@
 require('espower-loader')({
   cwd: process.cwd(),
-  pattern: '.tmp/test/**/*.js'
+  pattern: '.tmp/es5/test/**/*.js'
 });
