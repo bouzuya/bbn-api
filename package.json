@@ -22,10 +22,13 @@
     "url": "https://github.com/bouzuya/bbn-api/issues"
   },
   "dependencies": {
+    "fs-extra": "0.30.0",
     "marked": "0.3.5",
     "time-keeper": "0.2.2"
   },
   "devDependencies": {
+    "@types/fs-extra": "0.0.29",
+    "@types/node": "6.0.31",
     "@types/power-assert": "0.0.27",
     "@types/proxyquire": "1.3.26",
     "@types/sinon": "1.16.26",
