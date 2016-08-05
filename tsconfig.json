@@ -20,6 +20,12 @@
   "files": [
     "./src/index.ts",
     "./test/compile.ts",
+    "./test/fs/format-json.ts",
+    "./test/fs/list-files.ts",
+    "./test/fs/parse-json.ts",
+    "./test/fs/path.ts",
+    "./test/fs/read-file.ts",
+    "./test/fs/write-file.ts",
     "./test/index.ts",
     "./typings.d.ts"
   ]
