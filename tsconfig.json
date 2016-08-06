@@ -27,6 +27,7 @@
     "./test/fs/read-file.ts",
     "./test/fs/write-file.ts",
     "./test/index.ts",
+    "./test/migrate.ts",
     "./test/parse.ts",
     "./typings.d.ts"
   ]
