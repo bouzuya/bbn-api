@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "fs-extra": "0.30.0",
+    "jekyll-markdown-parser": "0.1.2",
     "marked": "0.3.5",
     "time-keeper": "0.2.2"
   },
