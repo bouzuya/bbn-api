@@ -1,8 +1,9 @@
 import { parseISOString } from 'time-keeper';
-import { Entry, EntryJson } from './types';
 import * as marked from 'marked';
+import { Entry, EntryJson } from './types';
+import { formatJson } from './fs';
 
-const compile = (entry: Entry): EntryJson => {
+const format = (entry: Entry): EntryJson => {
   const {
     data,
     minutes,
@@ -26,4 +27,13 @@ const compile = (entry: Entry): EntryJson => {
   };
 };
 
-export { compile };
+const formatEntries = (entries: Entry[]): string => {
+  return formatJson(entries.map(format));
+};
+
+const formatEntry = (entry: Entry): string => {
+  const entryJson = format(entry);
+  return formatJson(entryJson);
+};
+
+export { formatEntries, formatEntry };
