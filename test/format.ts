@@ -13,7 +13,7 @@ test('format.formatEntry', () => {
     pubdate: '2006-01-02T15:04:05-07:00',
     tags: ['misc'],
     title: 'title'
-  };
+  } as Entry; // no `id` property
   const json: EntryJson = Object.assign({}, entry, {
     date: '2006-01-03', // 2006-01-02T15:04:05-07:00 in +09:00
     html: '<p>hello</p>\n'
@@ -29,7 +29,7 @@ test('format.formatEntries', () => {
     pubdate: '2006-01-02T15:04:05-07:00',
     tags: ['misc'],
     title: 'title'
-  };
+  } as Entry; // no `id` property
   const json1: EntryJson = Object.assign({}, entry1, {
     date: '2006-01-03', // 2006-01-02T15:04:05-07:00 in +09:00
     html: '<p>hello</p>\n'
@@ -40,7 +40,7 @@ test('format.formatEntries', () => {
     pubdate: '2006-01-02T15:04:06-07:00',
     tags: ['programming'],
     title: 'title2'
-  };
+  } as Entry; // no `id` property
   const json2: EntryJson = Object.assign({}, entry2, {
     date: '2006-01-03', // 2006-01-02T15:04:05-07:00 in +09:00
     html: '<p>hello2</p>\n'
