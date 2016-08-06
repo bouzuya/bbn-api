@@ -1,12 +1,12 @@
 import beater from 'beater';
 import * as assert from 'power-assert';
 
-import { compile } from '../src/compile';
+import { compile } from '../src/format';
 import { Entry, EntryJson } from '../src/types';
 
 const { test } = beater();
 
-test('compile', () => {
+test('format', () => {
   const entry: Entry = {
     data: 'hello',
     minutes: 15,
