@@ -3,7 +3,7 @@ import { formatEntries, formatEntry } from './format';
 import { Entry } from './types';
 import { path, writeFile } from './fs';
 
-const saveEntries = (
+const saveYearlyEntries = (
   ds: Entry[],
   outDir: string
 ): void => {
@@ -13,13 +13,6 @@ const saveEntries = (
     ys[year].push(entry);
     return ys;
   }, <{ [year: string]: Entry[] }>{});
-  const ymsObj = ds.reduce((yms, entry) => {
-    const { id: { year, month } } = entry;
-    const ym = year + '-' + month;
-    if (typeof yms[ym] === 'undefined') yms[ym] = [];
-    yms[ym].push(entry);
-    return yms;
-  }, <{ [ym: string]: Entry[] }>{});
   Object.keys(ysObj).forEach((y) => {
     [
       `${y}.json`,
@@ -28,6 +21,20 @@ const saveEntries = (
       writeFile(path(outDir, file), formatEntries(ysObj[y]));
     });
   });
+};
+
+const saveEntries = (
+  ds: Entry[],
+  outDir: string
+): void => {
+  saveYearlyEntries(ds, outDir);
+  const ymsObj = ds.reduce((yms, entry) => {
+    const { id: { year, month } } = entry;
+    const ym = year + '-' + month;
+    if (typeof yms[ym] === 'undefined') yms[ym] = [];
+    yms[ym].push(entry);
+    return yms;
+  }, <{ [ym: string]: Entry[] }>{});
   Object.keys(ymsObj).forEach((ym) => {
     const [year, month] = ym.split('-');
     [
