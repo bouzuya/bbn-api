@@ -45,12 +45,10 @@ const saveMonthlyEntries = (
   });
 };
 
-const saveEntries = (
+const saveDailyEntries = (
   ds: Entry[],
   outDir: string
 ): void => {
-  saveYearlyEntries(ds, outDir);
-  saveMonthlyEntries(ds, outDir);
   ds.forEach((entry) => {
     const { id } = entry;
     const title = typeof id.title === 'undefined' ? 'diary' : id.title;
@@ -63,6 +61,15 @@ const saveEntries = (
       writeFile(path(outDir, file), formatEntry(entry));
     });
   });
+};
+
+const saveEntries = (
+  ds: Entry[],
+  outDir: string
+): void => {
+  saveYearlyEntries(ds, outDir);
+  saveMonthlyEntries(ds, outDir);
+  saveDailyEntries(ds, outDir);
 };
 
 const listEntries = (
