@@ -23,11 +23,10 @@ const saveYearlyEntries = (
   });
 };
 
-const saveEntries = (
+const saveMonthlyEntries = (
   ds: Entry[],
   outDir: string
 ): void => {
-  saveYearlyEntries(ds, outDir);
   const ymsObj = ds.reduce((yms, entry) => {
     const { id: { year, month } } = entry;
     const ym = year + '-' + month;
@@ -44,6 +43,14 @@ const saveEntries = (
       writeFile(path(outDir, file), formatEntries(ymsObj[ym]));
     });
   });
+};
+
+const saveEntries = (
+  ds: Entry[],
+  outDir: string
+): void => {
+  saveYearlyEntries(ds, outDir);
+  saveMonthlyEntries(ds, outDir);
   ds.forEach((entry) => {
     const { id } = entry;
     const title = typeof id.title === 'undefined' ? 'diary' : id.title;
