@@ -30,6 +30,7 @@
     "./test/index.ts",
     "./test/migrate.ts",
     "./test/parse.ts",
+    "./test/repository.ts",
     "./typings.d.ts"
   ]
 }
