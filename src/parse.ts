@@ -1,6 +1,8 @@
 import { parse } from 'jekyll-markdown-parser';
 import { Entry, EntryId, RawEntry } from './types';
 import { listFiles, parseJson, path, readFile } from './fs';
+import { parseISOString } from 'time-keeper';
+import * as marked from 'marked';
 
 export type ParserType = 'jekyll' | 'default';
 
@@ -47,7 +49,14 @@ const parseEntry = (
   const pubdate = meta.pubdate as string;
   const tags = (typeof meta.tags === 'undefined' ? [] : meta.tags) as string[];
   const title = meta.title as string;
-  const entry = { id: entryId, data, minutes, pubdate, tags, title } as Entry;
+  const date = parseISOString(pubdate)
+    .inTimeZone('+09:00')
+    .toISOString()
+    .substring(0, '2006-01-02'.length);
+  const html = marked(data);
+  const entry = {
+    id: entryId, data, date, html, minutes, pubdate, tags, title
+  };
   return entry;
 };
 

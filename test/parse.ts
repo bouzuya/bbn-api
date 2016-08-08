@@ -62,7 +62,9 @@ test('parse.parseEntry (default)', () => {
     pubdate: '2006-01-02T15:04:05-07:00',
     tags: [],
     title: 'title',
-    data
+    data,
+    date: '2006-01-03', // in time zone +09:00
+    html: '<p>markdown</p>\n'
   });
   assert(parseJson.callCount === 1);
   assert.deepEqual(parseJson.getCall(0).args, [JSON.stringify(meta)]);

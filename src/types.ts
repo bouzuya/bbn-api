@@ -13,6 +13,8 @@ export interface RawEntry {
 export interface Entry {
   id: EntryId;
   data: Markdown;
+  date: DateString;
+  html: HtmlString;
   minutes: Minutes;
   pubdate: DateTimeString;
   tags: TagName[];
