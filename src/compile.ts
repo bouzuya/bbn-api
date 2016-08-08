@@ -64,20 +64,14 @@ const saveDailyEntries = (
   });
 };
 
-const saveEntries = (
-  ds: Entry[],
-  outDir: string
-): void => {
-  saveYearlyEntries(ds, outDir);
-  saveMonthlyEntries(ds, outDir);
-  saveDailyEntries(ds, outDir);
-};
 
 const compileImpl = (
   inDir: string, outDir: string, type: ParserType = 'default'
 ): void => {
   const ds = new Repository(inDir, type).findAll();
-  saveEntries(ds, outDir);
+  saveYearlyEntries(ds, outDir);
+  saveMonthlyEntries(ds, outDir);
+  saveDailyEntries(ds, outDir);
 };
 
 const compile = (inDir: string, outDir: string): void => {
