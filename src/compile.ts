@@ -73,17 +73,10 @@ const saveEntries = (
   saveDailyEntries(ds, outDir);
 };
 
-const listEntries = (
-  dir: string,
-  type: ParserType = 'default'
-): Entry[] => {
-  return new Repository(dir, type).findAll();
-};
-
 const compileImpl = (
   inDir: string, outDir: string, type: ParserType = 'default'
 ): void => {
-  const ds = listEntries(inDir, type);
+  const ds = new Repository(inDir, type).findAll();
   saveEntries(ds, outDir);
 };
 
