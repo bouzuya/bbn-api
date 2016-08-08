@@ -12,13 +12,22 @@ export class Repository {
     return this._entries; // TODO: defensive copy
   }
 
-  findBy(query: { year?: string; }): Entry[] {
-    return this._entries.filter(({ id: { year } }) => year === query.year);
+  findBy(query: { year?: string; month?: string; }): Entry[] {
+    return this._entries.filter(({ id: { year, month } }) => {
+      const y = typeof year === 'undefined' || year === query.year;
+      const m = typeof month === 'undefined' || month === query.month;
+      return y && m;
+    });
+  }
+
+  getMonths(year: string): string[] {
+    return this.findBy({ year }).reduce<string[]>((ms, { id: { month } }) => {
+      return ms.some((m) => m === month) ? ms : ms.concat([month]);
+    }, []);
   }
 
   getYears(): string[] {
-    return this._entries.reduce<string[]>((ys, entry) => {
-      const { id: { year } } = entry;
+    return this._entries.reduce<string[]>((ys, { id: { year } }) => {
       return ys.some((y) => y === year) ? ys : ys.concat([year]);
     }, []);
   }

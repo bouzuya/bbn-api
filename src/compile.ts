@@ -21,23 +21,19 @@ const saveYearlyEntries = (
 };
 
 const saveMonthlyEntries = (
-  ds: Entry[],
+  repository: Repository,
   outDir: string
 ): void => {
-  const ymsObj = ds.reduce((yms, entry) => {
-    const { id: { year, month } } = entry;
-    const ym = year + '-' + month;
-    if (typeof yms[ym] === 'undefined') yms[ym] = [];
-    yms[ym].push(entry);
-    return yms;
-  }, <{ [ym: string]: Entry[] }>{});
-  Object.keys(ymsObj).forEach((ym) => {
-    const [year, month] = ym.split('-');
-    [
-      `${year}/${month}.json`,
-      `${year}/${month}/index.json`
-    ].forEach((file) => {
-      writeFile(path(outDir, file), formatEntries(ymsObj[ym]));
+  repository.getYears().forEach((year) => {
+    repository.getMonths(year).forEach((month) => {
+      const entries = repository.findBy({ year, month });
+      const formatted = formatEntries(entries);
+      [
+        `${year}/${month}.json`,
+        `${year}/${month}/index.json`
+      ].forEach((file) => {
+        writeFile(path(outDir, file), formatted);
+      });
     });
   });
 };
@@ -65,9 +61,8 @@ const compileImpl = (
   inDir: string, outDir: string, type: ParserType = 'default'
 ): void => {
   const repository = new Repository(inDir, type);
-  const ds = repository.findAll();
   saveYearlyEntries(repository, outDir);
-  saveMonthlyEntries(ds, outDir);
+  saveMonthlyEntries(repository, outDir);
   saveDailyEntries(repository, outDir);
 };
 
