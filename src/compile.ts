@@ -2,6 +2,7 @@ import { listEntryIds, parseEntry, ParserType } from './parse';
 import { formatEntries, formatEntry } from './format';
 import { Entry } from './types';
 import { path, writeFile } from './fs';
+import { Repository } from './repository';
 
 const saveYearlyEntries = (
   ds: Entry[],
@@ -76,7 +77,7 @@ const listEntries = (
   dir: string,
   type: ParserType = 'default'
 ): Entry[] => {
-  return listEntryIds(dir).map((id) => parseEntry(type, dir, id));
+  return new Repository(dir, type).findAll();
 };
 
 const compileImpl = (
