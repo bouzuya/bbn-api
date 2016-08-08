@@ -5,21 +5,17 @@ import { path, writeFile } from './fs';
 import { Repository } from './repository';
 
 const saveYearlyEntries = (
-  ds: Entry[],
+  repository: Repository,
   outDir: string
 ): void => {
-  const ysObj = ds.reduce((ys, entry) => {
-    const { id: { year } } = entry;
-    if (typeof ys[year] === 'undefined') ys[year] = [];
-    ys[year].push(entry);
-    return ys;
-  }, <{ [year: string]: Entry[] }>{});
-  Object.keys(ysObj).forEach((y) => {
+  repository.getYears().forEach((y) => {
+    const entries = repository.findBy({ year: y });
+    const formatted = formatEntries(entries);
     [
       `${y}.json`,
       `${y}/index.json`
     ].forEach((file) => {
-      writeFile(path(outDir, file), formatEntries(ysObj[y]));
+      writeFile(path(outDir, file), formatted);
     });
   });
 };
@@ -70,7 +66,7 @@ const compileImpl = (
 ): void => {
   const repository = new Repository(inDir, type);
   const ds = repository.findAll();
-  saveYearlyEntries(ds, outDir);
+  saveYearlyEntries(repository, outDir);
   saveMonthlyEntries(ds, outDir);
   saveDailyEntries(repository, outDir);
 };

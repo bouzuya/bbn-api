@@ -11,4 +11,15 @@ export class Repository {
   findAll(): Entry[] {
     return this._entries; // TODO: defensive copy
   }
+
+  findBy(query: { year?: string; }): Entry[] {
+    return this._entries.filter(({ id: { year } }) => year === query.year);
+  }
+
+  getYears(): string[] {
+    return this._entries.reduce<string[]>((ys, entry) => {
+      const { id: { year } } = entry;
+      return ys.some((y) => y === year) ? ys : ys.concat([year]);
+    }, []);
+  }
 }
