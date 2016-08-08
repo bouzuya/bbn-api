@@ -47,10 +47,10 @@ const saveMonthlyEntries = (
 };
 
 const saveDailyEntries = (
-  ds: Entry[],
+  repository: Repository,
   outDir: string
 ): void => {
-  ds.forEach((entry) => {
+  repository.findAll().forEach((entry) => {
     const { id } = entry;
     const title = typeof id.title === 'undefined' ? 'diary' : id.title;
     [
@@ -68,10 +68,11 @@ const saveDailyEntries = (
 const compileImpl = (
   inDir: string, outDir: string, type: ParserType = 'default'
 ): void => {
-  const ds = new Repository(inDir, type).findAll();
+  const repository = new Repository(inDir, type);
+  const ds = repository.findAll();
   saveYearlyEntries(ds, outDir);
   saveMonthlyEntries(ds, outDir);
-  saveDailyEntries(ds, outDir);
+  saveDailyEntries(repository, outDir);
 };
 
 const compile = (inDir: string, outDir: string): void => {
