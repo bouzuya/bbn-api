@@ -14,8 +14,8 @@ export class Repository {
 
   findBy(query: { year?: string; month?: string; }): Entry[] {
     return this._entries.filter(({ id: { year, month } }) => {
-      const y = typeof year === 'undefined' || year === query.year;
-      const m = typeof month === 'undefined' || month === query.month;
+      const y = typeof query.year === 'undefined' || year === query.year;
+      const m = typeof query.month === 'undefined' || month === query.month;
       return y && m;
     });
   }
