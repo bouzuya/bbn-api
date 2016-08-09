@@ -5,7 +5,7 @@ import {
 import { path, writeFile } from './fs';
 import { Repository } from './repository';
 
-const saveYearlyEntries = (
+const saveYearlyJson = (
   repository: Repository,
   outDir: string
 ): void => {
@@ -21,7 +21,7 @@ const saveYearlyEntries = (
   });
 };
 
-const saveMonthlyEntries = (
+const saveMonthlyJson = (
   repository: Repository,
   outDir: string
 ): void => {
@@ -39,7 +39,7 @@ const saveMonthlyEntries = (
   });
 };
 
-const saveDailyEntries = (
+const saveDailyJson = (
   repository: Repository,
   outDir: string
 ): void => {
@@ -92,9 +92,9 @@ const compileImpl = (
   inDir: string, outDir: string, type: ParserType = 'default'
 ): void => {
   const repository = new Repository(inDir, type);
-  saveYearlyEntries(repository, outDir);
-  saveMonthlyEntries(repository, outDir);
-  saveDailyEntries(repository, outDir);
+  saveYearlyJson(repository, outDir);
+  saveMonthlyJson(repository, outDir);
+  saveDailyJson(repository, outDir);
   savePostsJson(repository, outDir);
   saveAtomXml(repository, outDir);
   saveSitemapXml(repository, outDir);
