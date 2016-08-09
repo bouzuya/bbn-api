@@ -1,5 +1,6 @@
 import { Entry, EntryJson } from './types';
 import { formatJson } from './fs';
+export { formatAtom } from './format-atom';
 
 const format = (entry: Entry): EntryJson => {
   const {

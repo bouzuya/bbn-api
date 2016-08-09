@@ -1,10 +1,15 @@
 import beater from 'beater';
 import * as assert from 'power-assert';
 
-import { formatEntry, formatEntries } from '../src/format';
+import { formatAtom, formatEntry, formatEntries } from '../src/format';
 import { Entry } from '../src/types';
 
 const { test } = beater();
+
+test('format.formatAtom', () => {
+  // TODO
+  assert(formatAtom);
+});
 
 test('format.formatEntry', () => {
   const entry: Entry = {

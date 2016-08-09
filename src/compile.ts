@@ -1,5 +1,5 @@
 import { ParserType } from './parse';
-import { formatEntries, formatEntry } from './format';
+import { formatAtom, formatEntries, formatEntry } from './format';
 import { path, writeFile } from './fs';
 import { Repository } from './repository';
 
@@ -44,17 +44,26 @@ const saveDailyEntries = (
   repository.findAll().forEach((entry) => {
     const { id } = entry;
     const title = typeof id.title === 'undefined' ? 'diary' : id.title;
+    const formatted = formatEntry(entry);
     [
       `${id.year}/${id.month}/${id.date}.json`,
       `${id.year}/${id.month}/${id.date}/index.json`,
       `${id.year}/${id.month}/${id.date}/${title}.json`,
       `${id.year}/${id.month}/${id.date}/${title}/index.json`
     ].forEach((file) => {
-      writeFile(path(outDir, file), formatEntry(entry));
+      writeFile(path(outDir, file), formatted);
     });
   });
 };
 
+const saveAtomXml = (
+  repository: Repository,
+  outDir: string
+): void => {
+  const entries = repository.findAll();
+  const formatted = formatAtom(entries);
+  writeFile(path(outDir, 'atom.xml'), formatted);
+};
 
 const compileImpl = (
   inDir: string, outDir: string, type: ParserType = 'default'
@@ -63,6 +72,7 @@ const compileImpl = (
   saveYearlyEntries(repository, outDir);
   saveMonthlyEntries(repository, outDir);
   saveDailyEntries(repository, outDir);
+  saveAtomXml(repository, outDir);
 };
 
 const compile = (inDir: string, outDir: string): void => {
