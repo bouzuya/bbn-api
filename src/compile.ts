@@ -70,6 +70,29 @@ const savePostsJson = (
   writeFile(path(outDir, 'posts.json'), formatted);
 };
 
+const saveTagsJson = (
+  repository: Repository,
+  outDir: string
+): void => {
+  const entries = repository.findAll();
+  const formatted = JSON.stringify(
+    entries.reduce<{ name: string; count: number; }[]>((tags, entry) => {
+      return entry.tags.reduce((tags, tag) => {
+        const index = tags.findIndex(({ name }) => name === tag);
+        if (index >= 0) {
+          const before = tags.slice(0, index);
+          const oldTag = tags[index];
+          const newTag = Object.assign({}, oldTag, { count: oldTag.count + 1 });
+          const after = tags.slice(index + 1);
+          return before.concat([newTag]).concat(after);
+        } else {
+          return tags.concat([{ name: tag, count: 1 }]);
+        }
+      }, tags);
+    }, []));
+  writeFile(path(outDir, 'tags.json'), formatted);
+};
+
 const saveAtomXml = (
   repository: Repository,
   outDir: string
@@ -96,6 +119,7 @@ const compileImpl = (
   saveMonthlyJson(repository, outDir);
   saveDailyJson(repository, outDir);
   savePostsJson(repository, outDir);
+  saveTagsJson(repository, outDir);
   saveAtomXml(repository, outDir);
   saveSitemapXml(repository, outDir);
 };
