@@ -58,6 +58,18 @@ const saveDailyEntries = (
   });
 };
 
+const savePostsJson = (
+  repository: Repository,
+  outDir: string
+): void => {
+  const entries = repository.findAll();
+  const formatted = JSON.stringify(entries.map((entry) => {
+    const { date, minutes, pubdate, tags, title } = entry;
+    return { date, minutes, pubdate, tags, title };
+  }));
+  writeFile(path(outDir, 'posts.json'), formatted);
+};
+
 const saveAtomXml = (
   repository: Repository,
   outDir: string
@@ -83,6 +95,7 @@ const compileImpl = (
   saveYearlyEntries(repository, outDir);
   saveMonthlyEntries(repository, outDir);
   saveDailyEntries(repository, outDir);
+  savePostsJson(repository, outDir);
   saveAtomXml(repository, outDir);
   saveSitemapXml(repository, outDir);
 };
