@@ -1,7 +1,9 @@
 import beater from 'beater';
 import * as assert from 'power-assert';
 
-import { formatAtom, formatEntry, formatEntries } from '../src/format';
+import {
+  formatAtom, formatEntry, formatEntries, formatSitemap
+} from '../src/format';
 import { Entry } from '../src/types';
 
 const { test } = beater();
@@ -53,4 +55,9 @@ test('format.formatEntries', () => {
   const json2 = Object.assign({}, entry2);
   delete json2.id;
   assert.deepEqual(JSON.parse(formatEntries([entry1, entry2])), [json1, json2]);
+});
+
+test('format.formatSitemap', () => {
+  // TODO
+  assert(formatSitemap);
 });

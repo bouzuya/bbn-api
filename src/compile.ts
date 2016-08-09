@@ -1,5 +1,7 @@
 import { ParserType } from './parse';
-import { formatAtom, formatEntries, formatEntry } from './format';
+import {
+  formatAtom, formatEntries, formatEntry, formatSitemap
+} from './format';
 import { path, writeFile } from './fs';
 import { Repository } from './repository';
 
@@ -65,6 +67,15 @@ const saveAtomXml = (
   writeFile(path(outDir, 'atom.xml'), formatted);
 };
 
+const saveSitemapXml = (
+  repository: Repository,
+  outDir: string
+): void => {
+  const entries = repository.findAll();
+  const formatted = formatSitemap(entries);
+  writeFile(path(outDir, 'sitemap.xml'), formatted);
+};
+
 const compileImpl = (
   inDir: string, outDir: string, type: ParserType = 'default'
 ): void => {
@@ -73,6 +84,7 @@ const compileImpl = (
   saveMonthlyEntries(repository, outDir);
   saveDailyEntries(repository, outDir);
   saveAtomXml(repository, outDir);
+  saveSitemapXml(repository, outDir);
 };
 
 const compile = (inDir: string, outDir: string): void => {
