@@ -60,11 +60,12 @@
     "url": "https://github.com/bouzuya/bbn-api.git"
   },
   "scripts": {
-    "build": "npm-run-all -s 'build:ts' 'build:es2015' -p 'copy:js'",
+    "build": "npm-run-all -s 'build:ts' 'build:es2015' -p 'copy:*'",
     "build:es2015": "babel .tmp/es2015/ -d .tmp/es5/",
     "build:ts": "tsc",
     "clean": "rimraf .tmp/ lib/",
     "copy:js": "cpx '.tmp/es5/src/**/*.js' 'lib/'",
+    "copy:dts": "cpx '.tmp/es2015/src/**/*.d.ts' 'lib/'",
     "prepublish": "npm-run-all -s 'clean' 'build'",
     "start": "node ./lib/index.js",
     "test": "beater",
