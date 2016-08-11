@@ -111,6 +111,28 @@ const saveSitemapXml = (
   writeFile(path(outDir, 'sitemap.xml'), formatted);
 };
 
+const saveLinkedJson = (
+  repository: Repository,
+  outDir: string
+): void => {
+  const linked: { [to: string]: string[]; } = {};
+  const entries = repository.findAll();
+  entries.forEach((entry) => {
+    const match = entry.data.match(/\[(\d\d\d\d-\d\d-\d\d)\]/g);
+    if (!match) return;
+    const from = `${entry.id.year}-${entry.id.month}-${entry.id.date}`;
+    match.forEach((m) => {
+      const matched = m.match(/\[(\d\d\d\d-\d\d-\d\d)\]/);
+      if (!matched) return;
+      const to = matched[1];
+      if (typeof linked[to] === 'undefined') linked[to] = [];
+      linked[to].push(from);
+    });
+  });
+  const formatted = JSON.stringify(linked);
+  writeFile(path(outDir, 'linked.json'), formatted);
+};
+
 const compileImpl = (
   inDir: string, outDir: string, type: ParserType = 'default'
 ): void => {
@@ -122,6 +144,7 @@ const compileImpl = (
   saveTagsJson(repository, outDir);
   saveAtomXml(repository, outDir);
   saveSitemapXml(repository, outDir);
+  saveLinkedJson(repository, outDir);
 };
 
 const compile = (inDir: string, outDir: string): void => {
