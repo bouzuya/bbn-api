@@ -1,4 +1,3 @@
-import * as moment from 'moment';
 import { Entry } from './types';
 
 type AtomEntry = {
@@ -41,9 +40,7 @@ class AtomBuilder {
     return this.entries
       .sort(({ pubdate: a }, { pubdate: b }) => {
         // order by pubdate desc.
-        const ad = moment(a);
-        const bd = moment(b);
-        return ad.isSame(bd) ? 0 : (ad.isBefore(bd) ? 1 : -1);
+        return a === b ? 0 : (a < b ? 1 : -1);
       })
       .filter((_, index) => index < 20) // limit
       .map((entry) => {
