@@ -3,3 +3,8 @@ declare module 'marked' {
   namespace marked { }
   export = marked;
 }
+
+declare module 'commander-b' {
+  var commander: any;
+  export = commander;
+}
