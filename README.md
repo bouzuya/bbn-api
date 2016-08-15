@@ -1,5 +1,7 @@
 # bbn-api
 
+**DEPRECATED: use [bouzuya/kraken][]**
+
 bbn: blog.bouzuya.net api
 
 NOTE: bbn < 4.x uses [bouzuya/kraken][].
